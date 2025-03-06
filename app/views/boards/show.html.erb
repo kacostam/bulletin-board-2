@@ -8,6 +8,10 @@
   <% the_user = matching_users.at(0) %>
   Owner: <%= the_user.email %>
   
+  <% if user_signed_in? && current_user.id == @the_board.user_id %>
+    <a href="/delete_board/<%= @the_board.id %>">Delete Board</a>
+  <% end %>
+  
   </div>
 
 </div>

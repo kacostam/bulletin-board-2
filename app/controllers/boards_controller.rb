@@ -51,12 +51,16 @@ class BoardsController < ApplicationController
     end
   end
 
+
   def destroy
     the_id = params.fetch("path_id")
     the_board = Board.where({ :id => the_id }).at(0)
 
-    the_board.destroy
-
-    redirect_to("/boards", { :notice => "Board deleted successfully."} )
+    if the_board.user_id == current_user.id
+      the_board.destroy
+      redirect_to("/boards", { :notice => "Board deleted successfully."} )
+    else
+      redirect_to("/boards", { :alert => "You are not authorized to delete this board."} ) 
+    end
   end
 end
